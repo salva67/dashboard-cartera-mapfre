@@ -318,26 +318,7 @@ def main() -> None:
             fig.update_layout(height=420, xaxis_title=None, yaxis_title="Suma asegurada")
             st.plotly_chart(fig, use_container_width=True)
 
-    with tabs[3]:
-        st.markdown("### Calidad de datos")
-        q1, q2, q3 = st.columns(3)
-        with q1:
-            st.metric("Campos auditados", fmt_int(len(qc_campos)))
-        with q2:
-            st.metric("Duplicados exactos", fmt_int(len(dup_exact)))
-        with q3:
-            st.metric("Duplicados de negocio", fmt_int(len(dup_business)))
-
-        left, right = st.columns([1, 1.2])
-        with left:
-            st.dataframe(qc_campos, use_container_width=True, hide_index=True)
-        with right:
-            needs_review = filtered[filtered["needs_review"] == True].copy()
-            st.markdown("#### Registros marcados para revisión")
-            if needs_review.empty:
-                st.success("Con el filtro actual no hay registros marcados para revisión.")
-            else:
-                st.dataframe(needs_review.head(200), use_container_width=True, hide_index=True)
+    
 
     with tabs[4]:
         st.markdown("### Descarga y vista de datos")
