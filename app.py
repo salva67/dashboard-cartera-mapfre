@@ -143,9 +143,6 @@ def card(title: str, value: str, help_text: str | None = None) -> None:
 def main() -> None:
     data = load_all()
     points = data["points"].copy()
-    qc_campos = data["qc_campos"].copy()
-    dup_business = data["dup_business"].copy()
-    dup_exact = data["dup_exact"].copy()
     global_kpis = data["kpis"]
 
     points["needs_review"] = points["needs_review"].fillna(False)
