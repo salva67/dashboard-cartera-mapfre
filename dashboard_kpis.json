@@ -1,0 +1,21 @@
+{
+  "kpis": {
+    "n_registros_clean": 1211,
+    "n_asegurados": 277,
+    "n_provincias": 5,
+    "n_departamentos": 75,
+    "hectareas_totales": 156333.47999999998,
+    "hectareas_promedio": 129.09453344343515,
+    "hectareas_mediana": 85.0,
+    "pct_georef_valida": 0.9892650701899257,
+    "pct_moneda_valida": 1.0,
+    "pct_campana_valida": 0.9933938893476466,
+    "suma_asegurada_ars": 31155574366.0,
+    "suma_asegurada_usd": 37089700.0
+  },
+  "concentration": {
+    "share_top10_asegurados_has": 0.34948432031321763,
+    "share_top5_provincias_has": 1.0,
+    "share_top10_deptos_has": 0.6042069171619541
+  }
+}
