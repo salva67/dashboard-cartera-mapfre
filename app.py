@@ -7,9 +7,11 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+APP_DIR = Path(__file__).resolve().parent
+DASH_DIR = APP_DIR
+
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
-DASH_DIR = DATA_DIR / "dashboard"
 QC_DIR = DATA_DIR / "qc"
 
 st.set_page_config(
@@ -32,9 +34,25 @@ def fmt_num(x: float | int | None, decimals: int = 1) -> str:
     return f"{float(x):,.{decimals}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+
+
 @st.cache_data
-def load_csv(path: Path) -> pd.DataFrame:
+def load_csv(path):
     return pd.read_csv(path)
+
+@st.cache_data
+def load_all():
+    with open(DASH_DIR / "dashboard_kpis.json", "r", encoding="utf-8") as f:
+        kpis = json.load(f)
+
+    return {
+        "points": load_csv(DASH_DIR / "dashboard_points.csv"),
+        "cultivo": load_csv(DASH_DIR / "dashboard_cultivo.csv"),
+        "provincia": load_csv(DASH_DIR / "dashboard_provincia.csv"),
+        "depto": load_csv(DASH_DIR / "dashboard_depto.csv"),
+        "asegurado": load_csv(DASH_DIR / "dashboard_asegurado.csv"),
+        "kpis": kpis,
+    }
 
 
 @st.cache_data
@@ -43,19 +61,6 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
-@st.cache_data
-def load_all() -> dict[str, pd.DataFrame | dict]:
-    return {
-        "points": load_csv(DASH_DIR / "dashboard_points.csv"),
-        "cultivo": load_csv(DASH_DIR / "dashboard_cultivo.csv"),
-        "provincia": load_csv(DASH_DIR / "dashboard_provincia.csv"),
-        "depto": load_csv(DASH_DIR / "dashboard_depto.csv"),
-        "asegurado": load_csv(DASH_DIR / "dashboard_asegurado.csv"),
-        "qc_campos": load_csv(QC_DIR / "perfil_calidad_campos.csv"),
-        "dup_business": load_csv(QC_DIR / "duplicados_negocio.csv"),
-        "dup_exact": load_csv(QC_DIR / "duplicados_exactos.csv"),
-        "kpis": load_json(DASH_DIR / "dashboard_kpis.json"),
-    }
 
 
 def filter_points(df: pd.DataFrame) -> pd.DataFrame:
